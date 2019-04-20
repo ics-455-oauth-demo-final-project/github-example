@@ -94,13 +94,17 @@ function apiRequest($url, $post=FALSE, $headers=array()) {
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
   if($post)
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
+  echo "post if statement ran delete";
   $headers = [
     'Accept: application/vnd.github.v3+json, application/json',
     'User-Agent: http://104.248.223.185/'
   ];
   if(isset($_SESSION['access_token']))
     $headers[] = 'Authorization: Bearer ' . $_SESSION['access_token'];
+    echo "session is set if statement ran delete";
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+  echo "curl ran delete";
   $response = curl_exec($ch);
+  echo "this is before the json_decod is returned and stored in response? is this where it breaks delete";
   return json_decode($response, true);
 }
