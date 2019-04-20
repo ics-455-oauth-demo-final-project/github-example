@@ -39,14 +39,27 @@ if(isset($_GET['action']) && $_GET['action'] == 'logout') {
 // there will be a "code" and "state" parameter in the query string
 if(isset($_GET['code'])) {
   // Verify the state matches our stored state
-echo "code is set delete"; 
- if(!isset($_GET['state'])
+  echo "code is set delete"; 
+  if(!isset($_GET['state'])
     || $_SESSION['state'] != $_GET['state']) {
     header('Location: ' . $baseURL . '?error=invalid_state');
     echo "state is not set or the session state is not equal to the state its dying here dlete";
     die();
   }
+  echo "exchange the auth code for an access token delete";
   // Exchange the auth code for an access token
+  echo 
+  "<div display='none'>
+      <script type='text/javascript'>
+          console.log('exchange the auth code for an access token delete');
+      </script>
+  </div>";
+  echo 
+  "<div display='none'>
+      <script type='text/javascript'>
+          console.log('do you see me');
+      </script>
+  </div>";
   $token = apiRequest($tokenURL, array(
     'grant_type' => 'authorization_code',
     'client_id' => $githubClientID,
@@ -54,11 +67,27 @@ echo "code is set delete";
     'redirect_uri' => $baseURL,
     'code' => $_GET['code']
   ));
+  if(!$token){
+    echo 
+    "<div display='none'>
+        <script type='text/javascript'>
+            console.log('console log message');
+        </script>
+    </div>";
+  }
   $_SESSION['access_token'] = $token['access_token'];
   header('Location: ' . $baseURL);
-echo "made the token request delete";
+  echo 
+  "<div display='none'>
+      <script type='text/javascript'>
+          console.log('made the token request delete');
+      </script>
+  </div>"; 
+  echo "made the token request delete";
+  echo $token;
   die();
 }
+
 echo "did i make it here";
 if(isset($_GET['action']) && $_GET['action'] == 'repos') {
   // Find all repos created by the authenticated user
@@ -73,38 +102,18 @@ if(isset($_GET['action']) && $_GET['action'] == 'repos') {
   }
   echo '</ul>';
 }
-// If there is an access token in the session
-// the user is already logged in
-if(!isset($_GET['action'])) {
-  if(!empty($_SESSION['access_token'])) {
-    echo '<h3>Logged In</h3>';
-    echo '<p><a href="?action=repos">View Repos</a></p>';
-    echo '<p><a href="?action=logout">Log Out</a></p>';
-  } else {
-    echo '<h3>Not logged in</h3>';
-    echo '<p><a href="?action=login">Log In</a></p>';
-  }
-  die();
-}
-// This helper function will make API requests to GitHub, setting
-// the appropriate headers GitHub expects, and decoding the JSON response
 function apiRequest($url, $post=FALSE, $headers=array()) {
-  echo "do you see me this is the api Request delete";
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
   if($post)
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
-  echo "post if statement ran delete";
   $headers = [
     'Accept: application/vnd.github.v3+json, application/json',
-    'User-Agent: http://104.248.223.185/'
+    'User-Agent: https://example-app.com/'
   ];
   if(isset($_SESSION['access_token']))
     $headers[] = 'Authorization: Bearer ' . $_SESSION['access_token'];
-    echo "session is set if statement ran delete";
   curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-  echo "curl ran delete";
   $response = curl_exec($ch);
-  echo "this is before the json_decod is returned and stored in response? is this where it breaks delete";
   return json_decode($response, true);
 }
