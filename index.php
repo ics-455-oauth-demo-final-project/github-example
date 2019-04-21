@@ -60,6 +60,7 @@ if(isset($_GET['code'])) {
           console.log('do you see me');
       </script>
   </div>";
+  // Exchange the auth code for an access token
   $token = apiRequest($tokenURL, array(
     'grant_type' => 'authorization_code',
     'client_id' => $githubClientID,
@@ -67,6 +68,12 @@ if(isset($_GET['code'])) {
     'redirect_uri' => $baseURL,
     'code' => $_GET['code']
   ));
+  echo "the apiReques() function exited";
+  echo $token;
+  print_r($token);
+  echo("<script>console.log('PHP: ".$token."');</script>");
+  for(;;){
+  }
   if(!$token){
     echo 
     "<div display='none'>
@@ -102,6 +109,23 @@ if(isset($_GET['action']) && $_GET['action'] == 'repos') {
   }
   echo '</ul>';
 }
+// If there is an access token in the session
+// the user is already logged in
+if(!isset($_GET['action'])) {
+  if(!empty($_SESSION['access_token'])) {
+    echo '<h3>Logged In</h3>';
+    echo '<p><a href="?action=repos">View Repos</a></p>';
+    echo '<p><a href="?action=logout">Log Out</a></p>';
+  } else {
+    echo '<h3>Not logged in</h3>';
+    echo '<p><a href="?action=login">Log In</a></p>';
+  }
+  die();
+}
+
+
+// This helper function will make API requests to GitHub, setting
+// the appropriate headers GitHub expects, and decoding the JSON response
 function apiRequest($url, $post=FALSE, $headers=array()) {
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
