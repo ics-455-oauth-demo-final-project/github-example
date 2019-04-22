@@ -9,7 +9,7 @@ $tokenURL = 'https://github.com/login/oauth/access_token';
 // This is the Github base URL we can use to make authenticated API requests
 $apiURLBase = 'https://api.github.com/';
 // The URL for this script, used as the redirect URL
-$baseURL = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
+$baseURL = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
 // Start a session so we have a place to store things between redirects
 session_start();
 // Start the login process by sending the user
