@@ -15,6 +15,7 @@
     console.log(response);
     if (response.status === 'connected') {
       testAPI();
+      postProfileStatus();
 
     } else if (response.status === 'not_authorized') {
       FB.login(function(response) {
@@ -52,6 +53,18 @@
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+
+  function postProfileStatus() {
+    var body = 'Reading JS SDK documentation';
+    FB.api('/me/feed', 'post', { message: body }, function(response) {
+      if (!response || response.error) {
+        alert('Error occured');
+      } 
+      else {
+        alert('Post ID: ' + response.id);
+      }
     });
   }
 
