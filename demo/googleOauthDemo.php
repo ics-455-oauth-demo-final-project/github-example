@@ -14,38 +14,14 @@ $baseURL = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
 
 session_start();
 
-if(!isset($_GET['action'])) {
-	//if already logged in, fetches user ID in session
-	if(!empty($_SESSION['user_id'])) {
-		echo '<h3>Logged In</h3>';
-		echo '<p>User ID: '.$_SESSION['user_id'].'</p>';
-		echo '<p>Email: '.$_SESSION['email'].'</p>';
-		echo '<p><a href="?action=logout">Log Out</a></p>';
-		//fetches user info from Google
-		echo '<h3>User Info</h3>';
-		echo '<pre>';
-		$ch = curl_init('https://www.googleapis.com/oauth2/v3/userinfo');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer '.$_SESSION['access_token']]);
-		curl_exec($ch);
-		echo '</pre>';
-	
-	}
-
-	//if logged out, displays link to login url
-	else{
-		echo '<h3>Not Logged In</h3>';
-		echo '<p><a href="?action=login">Log In</a></p>';
-	}
-	die();
-}
 
 //login url begins login process
 if(isset($_GET['action']) && $_GET['action'] == 'login') {
 	unset($_SESSION['user_id']);
-
+	echo '<script>console.log("After clicking login")</script>';
 	//generates a random hash and stores it in the session
 	$_SESSION['state'] = bin2hex(random_bytes(16));
-
+	
 	$params = array(
 		//response type is asking google for an authorization code
 		//authorization code will later be exchanged for id_token
@@ -58,6 +34,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'login') {
 		//app will use state param to verify that it initiated request when user is directed back
 		'state' => $_SESSION['state']
 	);
+	echo '<script>console.log("login page")</script>';
 	//redirects the user to google authorization page with above parameters	
 	header('Location: '.$authorizeURL.'?'.http_build_query($params));
 	die();
@@ -71,6 +48,8 @@ if(isset($_GET['action']) && $_GET['action'] == 'logout') {
 
 //Google will send user back with code and state params in query string
 if(isset($_GET['code'])) {
+
+	echo '<script>console.log("google sent back")</script>';
 	//verifies that state param matches stored state
 	if(!isset($_GET['state']) || $_SESSION['state'] != $_GET['state']) {
 		header('Location: ' . $baseURL . '?error=invalid_state');
@@ -99,7 +78,7 @@ if(isset($_GET['code'])) {
 
 	$_SESSION['user_id'] = $userinfo['sub'];
 	$_SESSION['email'] = $userinfo['email'];
-
+	echo '<script>console.log("this far")</script>'; 
 	//store tokens
 	$_SESSION['access_token'] = $data['access_token'];
 	$_SESSION['id_token'] = $data['id_token'];
@@ -107,5 +86,30 @@ if(isset($_GET['code'])) {
 	header('Location: ' . $baseURL);
 	die();
 }
+
+if(!isset($_GET['action'])) {
+	//if already logged in, fetches user ID in session
+	if(!empty($_SESSION['user_id'])) {
+		echo '<h3>Logged In</h3>';
+		echo '<p>User ID: '.$_SESSION['user_id'].'</p>';
+		echo '<p>Email: '.$_SESSION['email'].'</p>';
+		echo '<p><a href="?action=logout">Log Out</a></p>';
+		//fetches user info from Google
+		echo '<h3>User Info</h3>';
+		echo '<pre>';
+		$ch = curl_init('https://www.googleapis.com/oauth2/v3/userinfo');
+		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer '.$_SESSION['access_token']]);
+		curl_exec($ch);
+		echo '</pre>';
+	
+	}
+
+	//if logged out, displays link to login url
+	else{
+		echo '<h3>Not Logged In</h3>';
+		echo '<p><a href="?action=login">Log In</a></p>';
+	}
+	die();
+}	
 
 ?>
