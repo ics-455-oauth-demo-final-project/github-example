@@ -42,10 +42,3 @@
 </div>
 </body>
 </html>
-
-<div class = "ui container">
-<h1 clas = "ui header">ICS 455 Final Project</h1>
-</div>
-</body>
-</html>
-
