@@ -1,13 +1,33 @@
 <html>
 <header>
 <title>ICS 455</title>
+<link rel="stylesheet" type="text/css" href="mystyle.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"></script>
+<style>
+body {
+     background-image: url(pictures/background.png);
+
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.badgePicture {
+position: fixed;
+bottom: 0px;
+right: 0px;
+}
+</style>
 </header>
 <body>
-
-
+<!-- SCM Music Player http://scmplayer.co -->
+<script type="text/javascript" src="https://scmplayer.co/script.js" 
+data-config="{'skin':'skins/aquaPink/skin.css','volume':50,'autoplay':true,'shuffle':false,'repeat':1,'placement':'bottom','showplaylist':false,'playlist':[{'title':'Hacking Into The Mainframe','url':'https://soundcloud.com/mr-robot-3/mrrobot-soundtrack-mac-quayle-main-theme-song'}]}" ></script>
+<!-- SCM Music Player script end -->
 
 
 <!-- Insert Code Inbetween BODY Tags <BODY></BODY> -->
@@ -139,17 +159,33 @@ MouseBubbles();
 
 
 
-
-<div class = "ui container">
+<br>
+<br>
+<div class = "ui container" style="background-color: white">
+<br>
+<br>
+<img src="pictures/title.jpg" class="center">
+<div class="center">
 <h1 clas = "ui header">ICS 455 Final Project</h1>
-<p>List can be nested (lists inside lists):</p>
+<p>this is a final project for school please dont actually sign into anything on this site.</p>
 
 <ul>
-  <li>GitHub
+  <li>Oauth Data Examples</li>
     <ul>
       <li><a href="/demo/githubOauthDemo.php">Github Oauth Data Example</a></li>
       <li><a href="/demo/facebookOauthDemo.php">Facebook Oauth Data Example</a></li>
+      <li><a href="/demo/googleOauthDemo.php">Google Oauth Data Example</a></li>
     </ul>
+  <li>Phishing attack</li>
+    <ul>
+      <li><a href="/phish/facebookPhishingDemo.php">Facebook Phishing Example</a></li>
+    </ul>
+
+  
 </div>
+<br>
+<br>
+</div>
+<img src="pictures/securitybadges.jpg" class="badgePicture">
 </body>
 </html>

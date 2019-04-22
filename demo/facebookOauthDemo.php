@@ -43,6 +43,10 @@
 
   function checkLoginState() {
     FB.getLoginStatus(function(response) {
+      console.log('This is the access token:' + response.authResponse.accessToken);
+      console.log('expiresIn:' + response.authResponse.expiresIn);
+      console.log('signedRequest:' + response.authResponse.signedRequest);
+      console.log('userID:' + response.authResponse.userID);
       statusChangeCallback(response);
     });
   }
@@ -61,6 +65,7 @@
     FB.api('/me/feed', 'post', { message: body }, function(response) {
       if (!response || response.error) {
         alert('Error occured');
+        console.log("The post could not be posted to the feed");
       } 
       else {
         alert('Post ID: ' + response.id);
@@ -83,10 +88,13 @@
 <p>Facebook doesnt let you use http you need https try it out by changing the url to http or https</p>
 <p>everything is handled through java script and the access token is stored locally</p>
 <p>Some servers might make calls on behalf of the user and it is important that the connection is encrypted so that the client can send the token to the server securely https://developers.facebook.com/docs/facebook-login/web/accesstokens</p>
+<p>tutorial button</p>
 <fb:login-button 
   scope="public_profile,email"
   onlogin="checkLoginState();">
 </fb:login-button>
+<p>login button wiht permissions</p>
+<div class="fb-login-button" data-size="large" data-button-type="continue_with" data-auto-logout-link="true" data-use-continue-as="true" data-scope="<comma separated list of permissions, e.g. public_profile, email>"></div>
 </div>
 </body>
 </html>
