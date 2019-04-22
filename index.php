@@ -149,7 +149,6 @@ MouseBubbles();
     <ul>
       <li><a href="/demo/githubOauthDemo.php">Github Oauth Data Example</a></li>
       <li><a href="/demo/facebookOauthDemo.php">Facebook Oauth Data Example</a></li>
-      <li><a href="/demo/googleOauthDemo.php">Facebook Oauth Data Example</a></li>
     </ul>
 </div>
 </body>
