@@ -10,7 +10,7 @@ $authorizeURL = 'https://accounts.google.com/o/oauth2/v2/auth';
 $tokenURL = 'https://www.googleapis.com/oauth2/v4/token';
 
 //this is the redirect URL 
-$baseURL = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
+$baseURL = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
 
 session_start();
 
@@ -18,10 +18,9 @@ session_start();
 //login url begins login process
 if(isset($_GET['action']) && $_GET['action'] == 'login') {
 	unset($_SESSION['user_id']);
-	echo '<script>console.log("After clicking login")</script>';
 	//generates a random hash and stores it in the session
 	$_SESSION['state'] = bin2hex(random_bytes(16));
-	
+
 	$params = array(
 		//response type is asking google for an authorization code
 		//authorization code will later be exchanged for id_token
@@ -48,7 +47,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'logout') {
 
 //Google will send user back with code and state params in query string
 if(isset($_GET['code'])) {
-
 	echo '<script>console.log("google sent back")</script>';
 	//verifies that state param matches stored state
 	if(!isset($_GET['state']) || $_SESSION['state'] != $_GET['state']) {
@@ -78,7 +76,8 @@ if(isset($_GET['code'])) {
 
 	$_SESSION['user_id'] = $userinfo['sub'];
 	$_SESSION['email'] = $userinfo['email'];
-	echo '<script>console.log("this far")</script>'; 
+	//exit($_SESSION['user_id']);
+ 
 	//store tokens
 	$_SESSION['access_token'] = $data['access_token'];
 	$_SESSION['id_token'] = $data['id_token'];
@@ -87,7 +86,7 @@ if(isset($_GET['code'])) {
 	die();
 }
 
-if(!isset($_GET['action'])) {
+if(isset($_GET['action'])) {
 	//if already logged in, fetches user ID in session
 	if(!empty($_SESSION['user_id'])) {
 		echo '<h3>Logged In</h3>';

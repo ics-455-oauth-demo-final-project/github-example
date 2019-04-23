@@ -88,12 +88,15 @@
 <p>Facebook doesnt let you use http you need https try it out by changing the url to http or https</p>
 <p>everything is handled through java script and the access token is stored locally</p>
 <p>Some servers might make calls on behalf of the user and it is important that the connection is encrypted so that the client can send the token to the server securely https://developers.facebook.com/docs/facebook-login/web/accesstokens</p>
-<p>tutorial button</p>
+<p>tutorial button(open the browser console before clicking the login button)</p>
 <fb:login-button 
   scope="public_profile,email"
   onlogin="checkLoginState();">
 </fb:login-button>
-<p>login button wiht permissions</p>
+
+<p>an error is thrown because we ask to post to the users profile using the facebook api but facebook needs to verify applications before these permissions are given</p>
+<p>https://developers.facebook.com/docs/facebook-login/permissions/#user-data</p>
+
 <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-auto-logout-link="true" data-use-continue-as="true" data-scope="<comma separated list of permissions, e.g. public_profile, email>"></div>
 </div>
 </body>
