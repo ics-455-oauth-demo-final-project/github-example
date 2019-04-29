@@ -93,8 +93,10 @@
   scope="public_profile,email"
   onlogin="checkLoginState();">
 </fb:login-button>
-
+<p>If we are able to steal an authorization token we are able to make access to facebook api calls (to demo we use facebook graph api to make calls given access tokens)</p>
+<p>https://developers.facebook.com/tools/explorer/</p>
 <p>an error is thrown because we ask to post to the users profile using the facebook api but facebook needs to verify applications before these permissions are given</p>
+<p>link to data that can be accessed using facebooks api</p>
 <p>https://developers.facebook.com/docs/facebook-login/permissions/#user-data</p>
 
 <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-auto-logout-link="true" data-use-continue-as="true" data-scope="<comma separated list of permissions, e.g. public_profile, email>"></div>
